@@ -1,9 +1,9 @@
-const loadCategoies = () => {
+const loadCategories = () => {
     fetch('https://openapi.programming-hero.com/api/news/categories')
         .then(res => res.json())
-        .then(data => displayCategoies(data.data.news_category))
+        .then(data => displayCategories(data.data.news_category))
 }
-const displayCategoies = categories => {
+const displayCategories = categories => {
     const categoryContainer = document.getElementById('category-container');
     for (const category of categories) {
         const categoryBtn = document.createElement('div');
@@ -34,4 +34,4 @@ const loadDetailsNews = newz => {
 
 
 }
-loadCategoies();
+loadCategories();
