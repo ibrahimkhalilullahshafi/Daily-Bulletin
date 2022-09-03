@@ -7,8 +7,8 @@ const displayCategories = categories => {
     const categoryContainer = document.getElementById('category-container');
     for (const category of categories) {
         const categoryBtn = document.createElement('div');
-        // categoryBtn.classList.add('category');
-        categoryBtn.innerHTML = `<button class="bg-info mx-3 w-12.5%" onclick="loadNews('${category.category_id}')">${category.category_name}</button>`;
+        categoryBtn.classList.add('flex-fill');
+        categoryBtn.innerHTML = `<button class="fw-bolder text-secondary mx-2 border border-0" onclick="loadNews('${category.category_id}')">${category.category_name}</button>`;
         categoryContainer.appendChild(categoryBtn);
     }
     // spinner-start---------------
@@ -32,19 +32,25 @@ const loadDetailsNews = news => {
     newsDetails.textContent = '';
     for (const oneNews of news) {
         const multipleNews = document.createElement('div');
-        multipleNews.innerHTML = `<div class="container">
+        multipleNews.innerHTML = `<div class="container my-5">
         <div class="card h-50 d-flex flex-column flex-sm-row">
             <img src="${oneNews.thumbnail_url}" class="card-img-top w-25" alt="...">
             <div class="card-body w-100">
                 <h5 class="card-title">${oneNews.title}</h5>
                 <p class="card-text">${oneNews.details.slice(0, 500)}</p>
-                <div class="d-flex">
-                <div><img src="${oneNews.author.img}" class="d-block w-25 img-fluid" alt="...">
-                </div>
-                <footer class="mx-2">
-                <h6 class="m-0">${oneNews.author.name}</h6>
-                <p>${oneNews.author.published_date}</p>
-                </footer>
+                <div class="container d-flex">
+                    <div class="d-flex align-items-start justify-content-start">
+                        <div>
+                            <img src="${oneNews.author.img}" class="d-block w-25 img-fluid" alt="...">
+                        </div>
+                        <div class="">
+                            <h6 class="m-0">${oneNews.author.name}</h6>
+                            <p>${oneNews.author.published_date}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Full news</button>
+                    </div>
                 </div>
             </div>
         </div>
