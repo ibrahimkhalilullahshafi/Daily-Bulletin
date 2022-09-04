@@ -21,6 +21,7 @@ const displayCategories = categories => {
 
 
 const loadNews = (code) => {
+    // console.log(code);
     const url = `https://openapi.programming-hero.com/api/news/category/${code}`
     fetch(url)
         .then(res => res.json())
@@ -32,12 +33,13 @@ const loadNews = (code) => {
 
 
 const loadDetailsNews = (news) => {
+    console.log(news);
     const getMessage = document.getElementById('message')
     getMessage.innerText = `${news.length} news found in this category`
     const newsDetails = document.getElementById('news-detail');
     newsDetails.textContent = '';
     news.forEach(oneNews => {
-        // console.log(oneNews);
+        // console.log(news);
         const multipleNews = document.createElement('div');
         newsDetails.appendChild(multipleNews);
         multipleNews.innerHTML = `<div class="container my-5">
@@ -60,7 +62,7 @@ const loadDetailsNews = (news) => {
                         </div>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-primary"  onclick="loadMoreNews('${oneNews.category_id}')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">more</button>
+                        <button type="button" class="btn btn-primary"  onclick="loadMoreNews('${oneNews._id}')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">more</button>
                     </div>
                 </div>
             </div>
@@ -69,6 +71,29 @@ const loadDetailsNews = (news) => {
     });
     // stop spinner-----------------------
     toggleSpinner(false);
+}
+
+
+
+const loadMoreNews = (more) => {
+    console.log(more);
+    const url = ` https://openapi.programming-hero.com/api/news/${more}`
+    fetch(url)
+        .then(res => res.json())
+        .then(data => loadMoreDetailsNews(data.data))
+}
+
+
+
+const loadMoreDetailsNews = (news) => {
+    news.forEach(oneNews => {
+        const fullNewsTitle = document.getElementById('staticBackdropLabel');
+        const fullNews = document.getElementById('full-news');
+        fullNewsTitle.innerText = oneNews.title;
+        fullNews.innerHTML = `<img src="${oneNews.image_url} class="img-fluid"">
+    <p>${oneNews.details}</p>`;
+    });
+
 }
 
 
@@ -84,4 +109,4 @@ const toggleSpinner = isLoading => {
 
 
 
-loadCategories();
+loadCategories('');
