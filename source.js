@@ -57,9 +57,9 @@ const loadDetailsNews = (news) => {
         newsDetails.appendChild(multipleNews);
         multipleNews.innerHTML = `<div class="container my-5">
         <div class="card h-50 d-flex flex-column flex-md-row">
-            <img src="${oneNews.thumbnail_url}" class="card-img-top w-25 img-fluid" alt="...">
+            <img src="${oneNews.thumbnail_url}" class="card-img-top w-25 img-thumbnail" alt="...">
             <div class="card-body w-100">
-                <h5 class="card-title">${oneNews.title}</h5>
+                <h4 class="card-title">${oneNews.title}</h4>
                 <p class="card-text">${oneNews.details.slice(0, 500)}...</p>
                 <div class="container d-flex pt-5">
                     <div class="container d-flex align-items-start justify-content-start">
@@ -102,7 +102,7 @@ const loadMoreDetailsNews = (news) => {
         const fullNewsTitle = document.getElementById('staticBackdropLabel');
         const fullNews = document.getElementById('full-news');
         fullNewsTitle.innerText = oneNews.title;
-        fullNews.innerHTML = `<img src="${oneNews.image_url}">
+        fullNews.innerHTML = `<img src="${oneNews.image_url}" class="img-fluid">
     <p>${oneNews.details}</p>`;
     });
 
