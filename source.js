@@ -1,7 +1,9 @@
 const loadCategories = () => {
+    const errorMessage = document.getElementById('error-message')
     fetch('https://openapi.programming-hero.com/api/news/categories')
         .then(res => res.json())
         .then(data => displayCategories(data.data.news_category))
+        .catch(error => console.log(error))
 }
 
 
@@ -21,25 +23,26 @@ const displayCategories = categories => {
 
 
 const loadNews = (code) => {
-    // console.log(code);
     const url = `https://openapi.programming-hero.com/api/news/category/${code}`
-    fetch(url)
-        .then(res => res.json())
-        .then(data => loadDetailsNews(data.data))
-    // spinner-start---------------
+    try {
+        fetch(url)
+            .then(res => res.json())
+            .then(data => loadDetailsNews(data.data))
+
+    } catch (error) {
+        console.log(error)
+    }
     toggleSpinner(true);
 }
 
 
 
 const loadDetailsNews = (news) => {
-    console.log(news);
     const getMessage = document.getElementById('message')
     getMessage.innerText = `${news.length} news found in this category`
     const newsDetails = document.getElementById('news-detail');
     newsDetails.textContent = '';
     news.forEach(oneNews => {
-        // console.log(news);
         const multipleNews = document.createElement('div');
         newsDetails.appendChild(multipleNews);
         multipleNews.innerHTML = `<div class="container my-5">
@@ -76,7 +79,6 @@ const loadDetailsNews = (news) => {
 
 
 const loadMoreNews = (more) => {
-    console.log(more);
     const url = ` https://openapi.programming-hero.com/api/news/${more}`
     fetch(url)
         .then(res => res.json())
