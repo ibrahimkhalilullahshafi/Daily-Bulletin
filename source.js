@@ -57,11 +57,11 @@ const loadDetailsNews = (news) => {
                             <img src="${oneNews.author.img}" class="d-block w-25">
                         </div>
                         <div class="w-25 me-5">
-                            <h6 class="m-0">${oneNews.author.name}</h6>
-                            <p>${oneNews.author.published_date}</p>
+                            <h6 class="m-0">${(oneNews.author.name !== null && oneNews.author.name !== "" ? oneNews.author.name : 'No data found')}</h6>
+                            <p>${(oneNews.author.published_date !== null && oneNews.author.published_date !== "" ? oneNews.author.published_date : 'No data found')}</p>
                         </div>
                         <div>
-                            <p class="fw-semibold">views: ${oneNews.total_view}</p>
+                            <p class="fw-semibold">views: ${(oneNews.total_view !== null && oneNews.total_view !== "" ? oneNews.total_view : 'No data found')}</p>
                         </div>
                     </div>
                     <div>
@@ -111,4 +111,4 @@ const toggleSpinner = isLoading => {
 
 
 
-loadCategories('');
+loadCategories();
