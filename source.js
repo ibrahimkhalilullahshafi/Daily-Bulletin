@@ -21,7 +21,7 @@ const displayCategories = categories => {
 
 
 
-const loadNews = (code = 01) => {
+const loadNews = (code) => {
     const url = `https://openapi.programming-hero.com/api/news/category/${code}`
     try {
         fetch(url)
@@ -31,6 +31,7 @@ const loadNews = (code = 01) => {
     } catch (error) {
         console.log(error)
     }
+    // --------------------------start spinner-----------------------
     toggleSpinner(true);
 }
 
@@ -41,6 +42,7 @@ const loadDetailsNews = (news) => {
     getMessage.innerText = `${news.length} news found in this category`
     const newsDetails = document.getElementById('news-detail');
     newsDetails.textContent = '';
+    // ---------------------------sorting by top viewed post---------------------
     const sortedNews = news.sort(function (a, b) {
         if (a.total_view > b.total_view) {
             return -1;
@@ -80,7 +82,7 @@ const loadDetailsNews = (news) => {
         </div>
         </div>`
     });
-    // stop spinner-----------------------
+    //-------------------stop spinner-----------------------
     toggleSpinner(false);
 }
 
@@ -108,7 +110,7 @@ const loadMoreDetailsNews = (news) => {
 
 
 
-// spinner function----------------------
+//---------------------spinner function----------------------
 const toggleSpinner = isLoading => {
     const spinnerSection = document.getElementById('load-spinner');
     if (isLoading) {
@@ -120,3 +122,4 @@ const toggleSpinner = isLoading => {
 
 
 loadCategories();
+loadNews('01')
