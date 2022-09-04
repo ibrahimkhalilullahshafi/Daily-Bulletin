@@ -1,5 +1,4 @@
 const loadCategories = () => {
-    const errorMessage = document.getElementById('error-message')
     fetch('https://openapi.programming-hero.com/api/news/categories')
         .then(res => res.json())
         .then(data => displayCategories(data.data.news_category))
@@ -22,7 +21,7 @@ const displayCategories = categories => {
 
 
 
-const loadNews = (code) => {
+const loadNews = (code = 01) => {
     const url = `https://openapi.programming-hero.com/api/news/category/${code}`
     try {
         fetch(url)
@@ -42,19 +41,28 @@ const loadDetailsNews = (news) => {
     getMessage.innerText = `${news.length} news found in this category`
     const newsDetails = document.getElementById('news-detail');
     newsDetails.textContent = '';
-    news.forEach(oneNews => {
+    const sortedNews = news.sort(function (a, b) {
+        if (a.total_view > b.total_view) {
+            return -1;
+        }
+        if (a.total_view < b.total_view) {
+            return 1;
+        }
+        return 0;
+    });
+    sortedNews.forEach(oneNews => {
         const multipleNews = document.createElement('div');
         newsDetails.appendChild(multipleNews);
         multipleNews.innerHTML = `<div class="container my-5">
-        <div class="card h-50 d-flex flex-column flex-sm-row">
-            <img src="${oneNews.thumbnail_url}" class="card-img-top w-25" alt="...">
+        <div class="card h-50 d-flex flex-column flex-md-row">
+            <img src="${oneNews.thumbnail_url}" class="card-img-top w-25 img-fluid" alt="...">
             <div class="card-body w-100">
                 <h5 class="card-title">${oneNews.title}</h5>
                 <p class="card-text">${oneNews.details.slice(0, 500)}...</p>
-                <div class="container d-flex">
+                <div class="container d-flex pt-5">
                     <div class="container d-flex align-items-start justify-content-start">
                         <div class="w-25 m-0">
-                            <img src="${oneNews.author.img}" class="d-block w-25">
+                            <img src="${oneNews.author.img}" class="d-block w-50 img-thumbnail">
                         </div>
                         <div class="w-25 me-5">
                             <h6 class="m-0">${(oneNews.author.name !== null && oneNews.author.name !== "" ? oneNews.author.name : 'No data found')}</h6>
@@ -92,7 +100,7 @@ const loadMoreDetailsNews = (news) => {
         const fullNewsTitle = document.getElementById('staticBackdropLabel');
         const fullNews = document.getElementById('full-news');
         fullNewsTitle.innerText = oneNews.title;
-        fullNews.innerHTML = `<img src="${oneNews.image_url} class="img-fluid"">
+        fullNews.innerHTML = `<img src="${oneNews.image_url}">
     <p>${oneNews.details}</p>`;
     });
 
